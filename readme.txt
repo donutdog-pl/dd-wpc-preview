@@ -5,7 +5,7 @@ Tags: comments, spam
 Requires at least: 4.5
 Tested up to: 7.1.3
 Requires PHP: 5.6
-Stable tag: 0.2.3
+Stable tag: 0.2.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -67,6 +67,12 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 2. This is the second screen shot
 
 == Changelog ==
+
+= 0.2.4 =
+* Enhancement - Add a dedicated zoom pill with `−` / `+` controls and a live percentage readout.
+* Enhancement - Zoom resizes the preview drawer from 10% to 100% of viewport width in 10% steps.
+* Enhancement - Persist the last zoom level in `localStorage` and restore it on subsequent visits.
+* Enhancement - Cap the zoomed preview height to the viewport so large zoom levels stay fully visible.
 
 = 0.2.3 =
 * Fix - Decouple cloned preview DOM and styling from WP Configurator classes (`.subset`, `.wpc-preview-inner`, `.wpc-image-layer`) by mapping cloned elements to independent `dd-wpc-*` namespaces, eliminating CSS entanglement and image height/width collapsing issues.

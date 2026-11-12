@@ -7,7 +7,7 @@
  * Author URI:      https://sultanowski.com
  * Text Domain:     dd-wpc-preview
  * Domain Path:     /languages
- * Version:         0.2.3
+ * Version:         0.2.4
  *
  * @package         Dd_Wpc_Preview
  */
@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'DD_WPC_VERSION', '0.2.3' );
+define( 'DD_WPC_VERSION', '0.2.4' );
 define( 'DD_WPC_FILE', __FILE__ );
 define( 'DD_WPC_DIR', plugin_dir_path( __FILE__ ) );
 define( 'DD_WPC_URL', plugin_dir_url( __FILE__ ) );

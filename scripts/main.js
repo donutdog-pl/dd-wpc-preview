@@ -17,7 +17,16 @@
         const scrollBtn = drawer.querySelector('.dd-wpc-btn-scroll');
         const toggleBtn = drawer.querySelector('.dd-wpc-btn-toggle');
         const customToggleImg = drawer.querySelector('.dd-wpc-icon-toggle');
+        const zoomOutBtn = drawer.querySelector('.dd-wpc-btn-zoom-out');
+        const zoomInBtn = drawer.querySelector('.dd-wpc-btn-zoom-in');
+        const zoomLevelLabel = drawer.querySelector('.dd-wpc-zoom-level');
 
+        const ZOOM_MIN = 10;
+        const ZOOM_MAX = 100;
+        const ZOOM_STEP = 10;
+        const ZOOM_STORAGE_KEY = 'ddWpcPreviewZoom';
+
+        let zoom = ZOOM_MIN;
         let mainPreviewElement = null;
         let observer = null;
         let isDrawerVisible = false;
@@ -27,6 +36,56 @@
         let setupRetries = 0;
         let attachRetries = 0;
         const MAX_RETRIES = 15;
+
+        function normalizeZoom(value) {
+            const parsed = parseInt(value, 10);
+            if (isNaN(parsed)) {
+                return ZOOM_MIN;
+            }
+            const snapped = Math.round(parsed / ZOOM_STEP) * ZOOM_STEP;
+            return Math.min(ZOOM_MAX, Math.max(ZOOM_MIN, snapped));
+        }
+
+        function readStoredZoom() {
+            try {
+                const stored = window.localStorage.getItem(ZOOM_STORAGE_KEY);
+                if (stored === null) {
+                    return ZOOM_MIN;
+                }
+                return normalizeZoom(stored);
+            } catch (e) {
+                return ZOOM_MIN;
+            }
+        }
+
+        function persistZoom(value) {
+            try {
+                window.localStorage.setItem(ZOOM_STORAGE_KEY, String(value));
+            } catch (e) {
+                // Storage unavailable (private mode, disabled cookies) - zoom still works for this visit.
+            }
+        }
+
+        function applyZoom(value) {
+            zoom = normalizeZoom(value);
+            drawer.style.setProperty('--dd-wpc-zoom', zoom + 'vw');
+            drawer.setAttribute('data-dd-wpc-zoom', String(zoom));
+
+            if (zoomLevelLabel) {
+                zoomLevelLabel.textContent = zoom + '%';
+            }
+            if (zoomOutBtn) {
+                zoomOutBtn.disabled = zoom <= ZOOM_MIN;
+            }
+            if (zoomInBtn) {
+                zoomInBtn.disabled = zoom >= ZOOM_MAX;
+            }
+        }
+
+        function changeZoom(delta) {
+            applyZoom(zoom + delta);
+            persistZoom(zoom);
+        }
 
         function findMainPreviewElement() {
             return (
@@ -197,6 +256,22 @@
                 if (customToggleImg) {
                     customToggleImg.style.transform = isCollapsed ? 'rotate(180deg)' : 'none';
                 }
+            });
+        }
+
+        applyZoom(readStoredZoom());
+
+        if (zoomOutBtn) {
+            zoomOutBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                changeZoom(-ZOOM_STEP);
+            });
+        }
+
+        if (zoomInBtn) {
+            zoomInBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                changeZoom(ZOOM_STEP);
             });
         }
 

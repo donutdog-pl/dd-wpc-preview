@@ -281,6 +281,14 @@ class DD_WPC_Preview_Settings {
 								<td><?php esc_html_e( 'Przycisk zwijania / rozwijania', 'dd-wpc-preview' ); ?></td>
 							</tr>
 							<tr>
+								<td><code>.dd-wpc-zoom-pill</code></td>
+								<td><?php esc_html_e( 'Kapsułka z kontrolami powiększenia', 'dd-wpc-preview' ); ?></td>
+							</tr>
+							<tr>
+								<td><code>.dd-wpc-btn-zoom-out</code> / <code>.dd-wpc-btn-zoom-in</code></td>
+								<td><?php esc_html_e( 'Przyciski zmniejszania / powiększania podglądu', 'dd-wpc-preview' ); ?></td>
+							</tr>
+							<tr>
 								<td><code>.dd-wpc-drawer.is-collapsed</code></td>
 								<td><?php esc_html_e( 'Stan zwinięty', 'dd-wpc-preview' ); ?></td>
 							</tr>
